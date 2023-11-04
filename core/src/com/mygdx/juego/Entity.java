@@ -4,6 +4,7 @@ package com.mygdx.juego;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -31,5 +32,9 @@ public abstract class Entity {
  
     }
    public abstract  void update(float deltaTime);
-   
+   public boolean isCollision(Entity cosa){
+    Rectangle rec1 = sprite.getBoundingRectangle();
+    Rectangle rec2 = cosa.sprite.getBoundingRectangle();
+    return rec1.overlaps(rec2);
+   }
 }

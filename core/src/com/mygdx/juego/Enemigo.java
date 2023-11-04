@@ -19,7 +19,7 @@ public class Enemigo extends Entity{
 
     @Override
     public void update(float deltaTime) {
-                        position.x+=deltaTime*speed;
+                       // position.x+=deltaTime*speed;
 
         sprite.setPosition(position.x, position.y);
     }
