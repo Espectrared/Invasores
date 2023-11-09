@@ -18,7 +18,9 @@ public class Principal extends Game {
         
 	public void create () {
 		dibujar = new SpriteBatch();
-		setScreen(new Gameplay_Screen(this));
+		setScreen(new Screen_MM(this));
+                        
+
 	}
 	public void dispose () {
 		dibujar.dispose();
