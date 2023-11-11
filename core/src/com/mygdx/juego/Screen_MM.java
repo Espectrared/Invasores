@@ -7,6 +7,7 @@ package com.mygdx.juego;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 /**
@@ -16,10 +17,12 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class Screen_MM extends Screen_Base {
 Principal main;
 Texture fondo_text;
-
-    Screen_MM(Principal main)
+long time,lastime=0;
+BitmapFont font;
+    Screen_MM(Principal main,BitmapFont font)
     {
         this.main=main;
+        this.font=font;
         fondo_text= new Texture("fondo.jpg");
         
     }
@@ -28,7 +31,12 @@ Texture fondo_text;
 
 		main.dibujar.begin();
                 main.dibujar.draw(fondo_text, 0, 0);
+                time=System.currentTimeMillis();
+                if(time-lastime>1000)
+                font.draw(main.dibujar, "Te presiono", 100, 400);
+                lastime=System.currentTimeMillis();
                	main.dibujar.end();
+                
                 
     }
 

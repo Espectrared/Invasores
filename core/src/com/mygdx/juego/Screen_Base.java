@@ -11,6 +11,7 @@ import com.badlogic.gdx.ScreenAdapter;
  * @author rober
  */
 public abstract class Screen_Base extends ScreenAdapter {
+    
     @Override
     abstract public void render(float delta);
    

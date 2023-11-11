@@ -8,7 +8,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeType.Bitmap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 
@@ -32,14 +34,18 @@ public class Gameplay_Screen extends Screen_Base{
         long last_shot=0;
         static final int PLAYER_VEL=300;
         static final int FRE_DISPARO=500;
-   public  Gameplay_Screen(Principal main)
+        BitmapFont font;
+   
+        public  Gameplay_Screen(Principal main,BitmapFont font)
    {
        this.main=main;
+       this.font = font;
       jugador_tex = new Texture("Player.png");
                 bala_text= new Texture("Bullet.png");
                 enemigo_tex = new Texture("Alien.png");
                 player = new Player(new Vector2(300,15),jugador_tex,PLAYER_VEL );
                 enemigo = new Enemigo(new Vector2(300,600),enemigo_tex,PLAYER_VEL);
+             
    }
     @Override
     public void render(float delta)
@@ -47,7 +53,7 @@ public class Gameplay_Screen extends Screen_Base{
                 gameLogic(deltaTime);
 		ScreenUtils.clear(0, 0, 0, 1);
 		main.dibujar.begin();
-              
+              font.draw(main.dibujar,"sasasa",100,100);
 		player.draw(main.dibujar);
                
                     for(Bala bala:bullets)
@@ -59,6 +65,7 @@ public class Gameplay_Screen extends Screen_Base{
                  enemigo.draw(main.dibujar);   
                 }
 		main.dibujar.end();
+                
 	}
        
            public void gameLogic(float deltaTime)

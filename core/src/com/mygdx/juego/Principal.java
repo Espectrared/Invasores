@@ -6,20 +6,29 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import java.util.ArrayList;
 //comentario push
 public class Principal extends Game {
 	SpriteBatch dibujar;
-	
+	FreeTypeFontGenerator generator;
+        FreeTypeFontParameter parameter;
+        BitmapFont font;
 	@Override
         
 	public void create () {
 		dibujar = new SpriteBatch();
-		setScreen(new Gameplay_Screen(this));
-                        
+                generator= new  FreeTypeFontGenerator (Gdx.files.internal("fuente.ttf"));
+                parameter = new FreeTypeFontParameter();
+                parameter.size=36;
+                font= generator.generateFont(parameter);
+                setScreen(new Screen_MM(this,font));
+                
 
 	}
 	public void dispose () {
