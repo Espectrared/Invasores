@@ -26,7 +26,8 @@ public class Gameplay_Screen extends Screen_Base{
     Texture jugador_tex;
 	
         Texture bala_text;
-        Enemigo enemigo;
+       // Enemigo enemigo;
+        ArrayList<Enemigo> enemies= new ArrayList<>();
         Bala bala;
         int push;//variable mamalona
         Texture enemigo_tex;
@@ -35,7 +36,7 @@ public class Gameplay_Screen extends Screen_Base{
         static final int PLAYER_VEL=300;
         static final int FRE_DISPARO=500;
         BitmapFont font;
-   
+        int score;
         public  Gameplay_Screen(Principal main,BitmapFont font)
    {
        this.main=main;
@@ -44,8 +45,11 @@ public class Gameplay_Screen extends Screen_Base{
                 bala_text= new Texture("Bullet.png");
                 enemigo_tex = new Texture("Alien.png");
                 player = new Player(new Vector2(300,15),jugador_tex,PLAYER_VEL );
-                enemigo = new Enemigo(new Vector2(300,600),enemigo_tex,PLAYER_VEL);
-             
+                enemies.add( new Enemigo(new Vector2(300,600),enemigo_tex,PLAYER_VEL));
+                enemies.add( new Enemigo(new Vector2(200,400),enemigo_tex,PLAYER_VEL));
+             enemies.add( new Enemigo(new Vector2(500,600),enemigo_tex,PLAYER_VEL));
+
+
    }
     @Override
     public void render(float delta)
@@ -53,7 +57,7 @@ public class Gameplay_Screen extends Screen_Base{
                 gameLogic(deltaTime);
 		ScreenUtils.clear(0, 0, 0, 1);
 		main.dibujar.begin();
-              font.draw(main.dibujar,"sasasa",100,100);
+             
 		player.draw(main.dibujar);
                
                     for(Bala bala:bullets)
@@ -61,9 +65,14 @@ public class Gameplay_Screen extends Screen_Base{
                         bala.draw(main.dibujar);
                     }
                 
-                if(enemigo !=null){
-                 enemigo.draw(main.dibujar);   
+                if( !enemies.isEmpty()){
+                    for(int i=0;i< enemies.size();i++)
+                    {
+                        enemies.get(i).draw(main.dibujar);
+                    }
+
                 }
+                font.draw(main.dibujar, "Puntaje "+score, 50, 680);
 		main.dibujar.end();
                 
 	}
@@ -95,7 +104,7 @@ public class Gameplay_Screen extends Screen_Base{
               }
             balaLogic(deltaTime);
             playerLogic(deltaTime);
-            if(enemigo !=null){
+            if(!enemies.isEmpty()){
              enemyLogic(deltaTime);
                
             }
@@ -119,7 +128,7 @@ public class Gameplay_Screen extends Screen_Base{
             player.update(deltaTime);
         }
 	
-        public void balaLogic(float daltaTime)
+     public void balaLogic(float daltaTime)
         {
             if(bullets.isEmpty()){
                 return;
@@ -133,12 +142,16 @@ public class Gameplay_Screen extends Screen_Base{
                     System.out.println("removido");
                 }
             }
-            if(enemigo!=null){
-                for(Bala bala : bullets){
-                         if(bala.isCollision(enemigo)){
-                enemigo = null;
-                bala = null;
-            }    
+            if(!enemies.isEmpty()){
+                for(int i=0;i< enemies.size();i++){
+                    for(int j=0;j<bullets.size();j++){
+                         if(bullets.get(j).isCollision(enemies.get(i))){
+                        enemies.remove(i);
+                        bullets.remove(j);
+                     score+=100;
+                         }
+               
+                }
                 }
      
             }
@@ -147,9 +160,13 @@ public class Gameplay_Screen extends Screen_Base{
         }
         public void enemyLogic(float deltaTime)
         {
-            if(enemigo !=null){
-             enemigo.update(deltaTime);   
+            if(enemies.isEmpty()){
+            return;   
             }
+               for(int i=0;i< enemies.size();i++)
+               {
+                   enemies.get(i).update(deltaTime);
+               }
         }
     
 }

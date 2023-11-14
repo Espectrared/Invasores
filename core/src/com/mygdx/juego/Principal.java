@@ -27,7 +27,8 @@ public class Principal extends Game {
                 parameter = new FreeTypeFontParameter();
                 parameter.size=36;
                 font= generator.generateFont(parameter);
-                setScreen(new Screen_MM(this,font));
+                //setScreen(new Screen_MM(this,font));
+                setScreen(new Gameplay_Screen(this,font));
                 
 
 	}
