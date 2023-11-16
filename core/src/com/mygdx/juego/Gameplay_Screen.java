@@ -148,7 +148,8 @@ public class Gameplay_Screen extends Screen_Base{
                          if(bullets.get(j).isCollision(enemies.get(i))){
                         enemies.remove(i);
                         bullets.remove(j);
-                     score+=100;
+                        score+=100;
+                        main.cliente.enviar("Kill;");
                          }
                
                 }
