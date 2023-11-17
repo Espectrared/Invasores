@@ -5,6 +5,7 @@
 package com.mygdx.juego;
 
 import com.badlogic.gdx.Gdx;
+import java.util.Random;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
@@ -24,19 +26,23 @@ public class Gameplay_Screen extends Screen_Base{
     Principal main;
     Player player;
     Texture jugador_tex;
-	
+    String id;
+    Jefe jefe;
+    Random random= new Random();
         Texture bala_text;
        // Enemigo enemigo;
         ArrayList<Enemigo> enemies= new ArrayList<>();
         Bala bala;
         int push;//variable mamalona
         Texture enemigo_tex;
+        Texture jefe_tex;
         ArrayList<Bala> bullets = new ArrayList<>();
         long last_shot=0;
         static final int PLAYER_VEL=300;
         static final int FRE_DISPARO=500;
         BitmapFont font;
         int score;
+        boolean boss = false;
         public  Gameplay_Screen(Principal main,BitmapFont font)
    {
        this.main=main;
@@ -75,6 +81,10 @@ public class Gameplay_Screen extends Screen_Base{
                 font.draw(main.dibujar, "Puntaje "+score, 50, 680);
 		main.dibujar.end();
                 
+                
+                if(boss){
+                   jefe.draw(main.dibujar);
+                }
 	}
        
            public void gameLogic(float deltaTime)
@@ -149,7 +159,7 @@ public class Gameplay_Screen extends Screen_Base{
                         enemies.remove(i);
                         bullets.remove(j);
                         score+=100;
-                        main.cliente.enviar("Kill;");
+                        main.cliente.enviar(main.id+";jefe");
                          }
                
                 }
@@ -159,6 +169,12 @@ public class Gameplay_Screen extends Screen_Base{
       
             
         }
+     
+     public void generateBoss(){
+         int x = new Random().nextInt(400-10)+10;
+                 int y = new Random().nextInt(400-10)+10;
+          enemies.add( new Enemigo(new Vector2(x,y),enemigo_tex,PLAYER_VEL));
+     }
         public void enemyLogic(float deltaTime)
         {
             if(enemies.isEmpty()){

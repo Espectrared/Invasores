@@ -14,14 +14,15 @@ public class Client implements Runnable {
     private int puerto = 2027;
     //Si estamos en nuestra misma maquina usamos localhost si no la ip de la maquina servidor
     private String host = "localhost";
-
+    Principal main;
     //Variables del frame 
     private String mensaje;
 
 
     //Constructor recibe como parametro la ventana (Frame), para poder hacer modificaciones sobre los botones
-    public Client() {
+    public Client(Principal main) {
         try {
+            this.main = main;
             //Creamos el socket con el host y el puerto, declaramos los streams de comunicacion
             cliente = new Socket(host, puerto);
             in = new DataInputStream(cliente.getInputStream());
@@ -43,7 +44,15 @@ public class Client implements Runnable {
                 //Recibimos el mensaje
                 mensaje = in.readUTF();
                 String[] mensajes = mensaje.split(";");
-                System.out.println("Desde cliente: "+mensaje);                               
+                if(!(main.id.equals(mensajes[0]))){
+                    System.out.println("Desde cliente: "+mensaje);  
+                    if(mensajes[1].equalsIgnoreCase("jefe")){
+                    System.out.println("xd");
+                   main.gameplay.generateBoss();
+                }
+
+                }
+                                                            
 
             }
         } catch (Exception e) {

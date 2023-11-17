@@ -21,20 +21,23 @@ public class Principal extends Game {
         BitmapFont font;
         Client cliente;
         Thread cliente_t;
+        String id;
+        Gameplay_Screen gameplay;
 	@Override
-        
 	public void create () {
-                
+                id =  Long.toString(System.currentTimeMillis())+Math.random();
+                System.out.println("id: " + id);
 		dibujar = new SpriteBatch();
                 generator= new  FreeTypeFontGenerator (Gdx.files.internal("fuente.ttf"));
                 parameter = new FreeTypeFontParameter();
                 parameter.size=36;
                 font= generator.generateFont(parameter);
                 //setScreen(new Screen_MM(this,font));
-                cliente = new Client();
+                cliente = new Client(this);
                 cliente_t = new Thread(cliente);
                 cliente_t.start();
-                setScreen(new Gameplay_Screen(this,font));
+                gameplay = new Gameplay_Screen(this,font);
+                setScreen(gameplay);
                 
 
 	}
