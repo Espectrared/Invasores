@@ -1,18 +1,20 @@
 package com.mygdx.juego;
+
 import com.badlogic.gdx.Gdx;
-import java.util.Random;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeType.Bitmap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
+import static com.mygdx.juego.Gameplay_Screen.FRE_DISPARO;
+import static com.mygdx.juego.Gameplay_Screen.PLAYER_VEL;
 import java.util.ArrayList;
 import java.util.Random;
-public class Gameplay_Screen extends Screen_Base{
-    Principal main;
+
+public class Nivel2 extends Screen_Base {
+Principal main;
     Player player;
     Texture jugador_tex;
     String id;
@@ -31,10 +33,8 @@ public class Gameplay_Screen extends Screen_Base{
         static final int FRE_DISPARO=500;
         BitmapFont font;
         int score;
-        boolean boss = false;
-        public  Gameplay_Screen(Principal main,BitmapFont font)
-   {
-       this.main=main;
+    public Nivel2(Principal main, BitmapFont font,int score) {
+        this.main=main;
        this.font = font;
       jugador_tex = new Texture("Player.png");
                 bala_text= new Texture("Bullet.png");
@@ -43,10 +43,12 @@ public class Gameplay_Screen extends Screen_Base{
                 enemies.add( new Enemigo(new Vector2(300,600),enemigo_tex,PLAYER_VEL));
                 enemies.add( new Enemigo(new Vector2(200,400),enemigo_tex,PLAYER_VEL));
              enemies.add( new Enemigo(new Vector2(500,600),enemigo_tex,PLAYER_VEL));
-   }
+             this.score=score;
+    }
+
     @Override
-    public void render(float delta)
-    {float deltaTime= Gdx.graphics.getDeltaTime();
+    public void render(float delta) {
+      float deltaTime= Gdx.graphics.getDeltaTime();
                 gameLogic(deltaTime);
 		ScreenUtils.clear(0, 0, 0, 1);
 		main.dibujar.begin();
@@ -62,10 +64,9 @@ public class Gameplay_Screen extends Screen_Base{
                     }
                 }
                 font.draw(main.dibujar, "Puntaje "+score, 50, 680);
+                font.draw(main.dibujar, "Nivel 2", 350, 680);
 		main.dibujar.end();
-                if(boss){
-                   jefe.draw(main.dibujar);
-                }
+                
 	}
            public void gameLogic(float deltaTime)
         {
@@ -91,15 +92,16 @@ public class Gameplay_Screen extends Screen_Base{
             if(!enemies.isEmpty()){
              enemyLogic(deltaTime);
             }
-              if(score >= 2000)
-    {
-        // Cambia a la pantalla de nivel 2
-        main.setScreen(new Nivel2(main, font,score));
-    }
+
         }
-    public void hide()    {    }
-    public void show(){}
-    public void playerLogic(Float deltaTime){ player.update(deltaTime);}
+    
+
+    public void hide() {}
+    public void show() {}
+
+     public void playerLogic(Float deltaTime){
+player.update(deltaTime);
+}
     
      public void balaLogic(float daltaTime)
         {
@@ -126,17 +128,9 @@ public class Gameplay_Screen extends Screen_Base{
                          }
                 }
                 }
-     
-            }
-      
-            
+            }     
         }
-     public void generateBoss(){
-         int x = new Random().nextInt(400-10)+10;
-                 int y = new Random().nextInt(400-10)+10;
-          enemies.add( new Enemigo(new Vector2(x,y),enemigo_tex,PLAYER_VEL));
-     }
-        public void enemyLogic(float deltaTime)
+     public void enemyLogic(float deltaTime)
         {
             if(enemies.isEmpty()){
             return;   
@@ -146,5 +140,5 @@ public class Gameplay_Screen extends Screen_Base{
                    enemies.get(i).update(deltaTime);
                }
         }
-    
 }
+

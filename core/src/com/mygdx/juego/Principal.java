@@ -37,10 +37,7 @@ public class Principal extends Game {
                 cliente_t = new Thread(cliente);
                 cliente_t.start();
                 gameplay = new Gameplay_Screen(this,font);
-                setScreen(gameplay);
-                
-
-	}
+                setScreen(gameplay);	}
 	public void dispose () {
 		dibujar.dispose();
 		
