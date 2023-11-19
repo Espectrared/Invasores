@@ -32,12 +32,11 @@ public class Principal extends Game {
                 parameter = new FreeTypeFontParameter();
                 parameter.size=36;
                 font= generator.generateFont(parameter);
-                //setScreen(new Screen_MM(this,font));
+                setScreen(new Screen_MM(this,font));
                 cliente = new Client(this);
                 cliente_t = new Thread(cliente);
                 cliente_t.start();
-                gameplay = new Gameplay_Screen(this,font);
-                setScreen(gameplay);	}
+                	}
 	public void dispose () {
 		dibujar.dispose();
 		

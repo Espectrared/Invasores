@@ -47,9 +47,12 @@ public class Client implements Runnable {
                 if(!(main.id.equals(mensajes[0]))){
                     System.out.println("Desde cliente: "+mensaje);  
                     if(mensajes[1].equalsIgnoreCase("jefe")){
-                    System.out.println("xd");
                    main.gameplay.generateBoss();
                 }
+                    
+                    if(mensajes[1].equalsIgnoreCase("gano")){
+                     main.setScreen(new Win_Screen(main, main.font, main.gameplay.score));
+                    }
 
                 }
                                                             

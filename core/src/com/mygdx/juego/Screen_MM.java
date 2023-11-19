@@ -33,8 +33,12 @@ BitmapFont font;
                 main.dibujar.draw(fondo_text, 0, 0);
                 time=System.currentTimeMillis();
                 if(time-lastime>1000)
-                font.draw(main.dibujar, "Te presiono", 100, 400);
+                font.draw(main.dibujar, "Presiona espacio para continuar", 100, 400);
                 lastime=System.currentTimeMillis();
+                if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+                    main.setScreen(new Gameplay_Screen(main,font));
+                    
+                }
                	main.dibujar.end();
                 
                 

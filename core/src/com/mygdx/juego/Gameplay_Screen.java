@@ -17,6 +17,7 @@ public class Gameplay_Screen extends Screen_Base{
     Texture jugador_tex;
     String id;
     Jefe jefe;
+    public int score;
     Random random= new Random();
         Texture bala_text;
        // Enemigo enemigo;
@@ -30,7 +31,6 @@ public class Gameplay_Screen extends Screen_Base{
         static final int PLAYER_VEL=300;
         static final int FRE_DISPARO=500;
         BitmapFont font;
-        int score;
         boolean boss = false;
         public  Gameplay_Screen(Principal main,BitmapFont font)
    {
@@ -43,14 +43,19 @@ public class Gameplay_Screen extends Screen_Base{
                 enemies.add( new Enemigo(new Vector2(300,600),enemigo_tex,PLAYER_VEL));
                 enemies.add( new Enemigo(new Vector2(200,400),enemigo_tex,PLAYER_VEL));
              enemies.add( new Enemigo(new Vector2(500,600),enemigo_tex,PLAYER_VEL));
+             enemies.add( new Enemigo(new Vector2(200,15),enemigo_tex,PLAYER_VEL));
    }
     @Override
     public void render(float delta)
-    {float deltaTime= Gdx.graphics.getDeltaTime();
+    {
+        float deltaTime= Gdx.graphics.getDeltaTime();
                 gameLogic(deltaTime);
 		ScreenUtils.clear(0, 0, 0, 1);
 		main.dibujar.begin();
-		player.draw(main.dibujar);
+                if(player != null){
+                player.draw(main.dibujar);    
+                }
+		
                     for(Bala bala:bullets)
                     {
                         bala.draw(main.dibujar);
@@ -62,14 +67,19 @@ public class Gameplay_Screen extends Screen_Base{
                     }
                 }
                 font.draw(main.dibujar, "Puntaje "+score, 50, 680);
-		main.dibujar.end();
+		
                 if(boss){
                    jefe.draw(main.dibujar);
                 }
+                main.dibujar.end();
 	}
+    
+    
+    //Game logic
            public void gameLogic(float deltaTime)
         {
-            if(Gdx.input.isKeyPressed(Input.Keys.A))
+            if(player != null){
+                if(Gdx.input.isKeyPressed(Input.Keys.A))
             {
               player.moveleft(deltaTime);
             }
@@ -86,6 +96,8 @@ public class Gameplay_Screen extends Screen_Base{
                                 last_shot=System.currentTimeMillis();
                   }
               }
+           
+           
             balaLogic(deltaTime);
             playerLogic(deltaTime);
             if(!enemies.isEmpty()){
@@ -96,11 +108,34 @@ public class Gameplay_Screen extends Screen_Base{
         // Cambia a la pantalla de nivel 2
         main.setScreen(new Nivel2(main, font,score));
     }
+            }
+            
         }
     public void hide()    {    }
     public void show(){}
-    public void playerLogic(Float deltaTime){ player.update(deltaTime);}
+    public void playerLogic(Float deltaTime){ 
+     if(player !=null){
+          player.update(deltaTime);
+     }
+        if(!enemies.isEmpty()){
+                for(int i=0;i< enemies.size();i++){
+                         if(enemies.get(i).isCollision(player)){
+                             player = null;
+                             this.hide();
+                              main.setScreen(new GameOver_Screen(main, font,score));
+                              main.cliente.enviar(main.id+";gano");
+                             System.out.println("El player murio");
+                         }
+                }
+     
+            }
+       
     
+    
+    
+    }
+    
+    ///Bala logic
      public void balaLogic(float daltaTime)
         {
             if(bullets.isEmpty()){
@@ -112,7 +147,6 @@ public class Gameplay_Screen extends Screen_Base{
                 if(bullets.get(x).position.y>Gdx.graphics.getHeight())
                 {
                     bullets.remove(x);
-                    System.out.println("removido");
                 }
             }
             if(!enemies.isEmpty()){
