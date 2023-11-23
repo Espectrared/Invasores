@@ -22,6 +22,7 @@ public class Gameplay_Screen extends Screen_Base{
         Texture bala_text;
        // Enemigo enemigo;
         ArrayList<Enemigo> enemies= new ArrayList<>();
+        ArrayList<Explosion> explosions = new ArrayList<>();
         Bala bala;
         int push;//variable mamalona
         Texture enemigo_tex;
@@ -65,6 +66,11 @@ public class Gameplay_Screen extends Screen_Base{
                     {
                         enemies.get(i).draw(main.dibujar);
                     }
+                }
+                if(!explosions.isEmpty()){
+                   for(int i = 0; i < explosions.size(); i++){
+                       explosions.get(i).draw(main.dibujar, delta);
+                   }
                 }
                 font.draw(main.dibujar, "Puntaje "+score, 50, 680);
 		
@@ -153,6 +159,7 @@ public class Gameplay_Screen extends Screen_Base{
                 for(int i=0;i< enemies.size();i++){
                     for(int j=0;j<bullets.size();j++){
                          if(bullets.get(j).isCollision(enemies.get(i))){
+                        explosions.add(new Explosion(enemies.get(i).position.x,enemies.get(i).position.y));
                         enemies.remove(i);
                         bullets.remove(j);
                         score+=100;

@@ -2,14 +2,10 @@ package com.mygdx.juego;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
-import static com.mygdx.juego.Gameplay_Screen.FRE_DISPARO;
-import static com.mygdx.juego.Gameplay_Screen.PLAYER_VEL;
 import java.util.ArrayList;
 import java.util.Random;
 
