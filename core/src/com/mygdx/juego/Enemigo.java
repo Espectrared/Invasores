@@ -5,10 +5,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
 public class Enemigo extends Entity{
+
     private float limiteIzquierdo;
     private float limiteDerecho;
     private float tiempoTranscurrido = 0; // Contador de tiempo
-    private float intervaloDeTiempo = 1; // Intervalo de tiempo en segundos para que los enemigos bajen
+    private float intervaloDeTiempo = 3; // Intervalo de tiempo en segundos para que los enemigos bajen
 
     public Enemigo(Vector2 position, Texture img, float speed) {
         super(position, img, speed);

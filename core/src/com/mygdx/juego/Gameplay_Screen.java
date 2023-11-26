@@ -47,16 +47,11 @@ public class Gameplay_Screen extends Screen_Base{
                 enemies.add( new Enemigo(new Vector2(300,600),enemigo_tex,PLAYER_VEL));
                 enemies.add( new Enemigo(new Vector2(200,400),enemigo_tex,PLAYER_VEL));
              enemies.add( new Enemigo(new Vector2(500,600),enemigo_tex,PLAYER_VEL));
-       enemies.add( new Enemigo(new Vector2(400,600),enemigo_tex,PLAYER_VEL));
-       enemies.add( new Enemigo(new Vector2(200,600),enemigo_tex,PLAYER_VEL));
-       enemies.add( new Enemigo(new Vector2(100,100),enemigo_tex,PLAYER_VEL));
-
-
-
    }
     @Override
     public void render(float delta)
     {
+
         float deltaTime= Gdx.graphics.getDeltaTime();
                 gameLogic(deltaTime);
 		ScreenUtils.clear(0, 0, 0, 1);
