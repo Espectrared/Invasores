@@ -11,6 +11,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import java.util.ArrayList;
 import java.util.Random;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 public class Gameplay_Screen extends Screen_Base{
     Principal main;
     Player player;
@@ -33,7 +35,8 @@ public class Gameplay_Screen extends Screen_Base{
         static final int FRE_DISPARO=500;
         BitmapFont font;
         boolean boss = false;
-        public  Gameplay_Screen(Principal main,BitmapFont font)
+
+    public  Gameplay_Screen(Principal main,BitmapFont font)
    {
        this.main=main;
        this.font = font;
@@ -44,7 +47,12 @@ public class Gameplay_Screen extends Screen_Base{
                 enemies.add( new Enemigo(new Vector2(300,600),enemigo_tex,PLAYER_VEL));
                 enemies.add( new Enemigo(new Vector2(200,400),enemigo_tex,PLAYER_VEL));
              enemies.add( new Enemigo(new Vector2(500,600),enemigo_tex,PLAYER_VEL));
-             enemies.add( new Enemigo(new Vector2(200,15),enemigo_tex,PLAYER_VEL));
+       enemies.add( new Enemigo(new Vector2(400,600),enemigo_tex,PLAYER_VEL));
+       enemies.add( new Enemigo(new Vector2(200,600),enemigo_tex,PLAYER_VEL));
+       enemies.add( new Enemigo(new Vector2(100,100),enemigo_tex,PLAYER_VEL));
+
+
+
    }
     @Override
     public void render(float delta)
