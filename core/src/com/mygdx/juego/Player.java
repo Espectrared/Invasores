@@ -52,4 +52,5 @@ public class Player extends Entity{
     public void aumenentovel(float velocidad){
         this.speed = velocidad;
     }
+
 }

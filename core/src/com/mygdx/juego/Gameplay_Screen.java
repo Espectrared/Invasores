@@ -23,10 +23,11 @@
         Random random= new Random();
             Texture bala_text;
             Texture velocidad;
+            Texture caracol;
             ArrayList<Enemigo> enemies= new ArrayList<>();
             ArrayList<Explosion> explosions = new ArrayList<>();
             Bala bala;
-       SpeedTextureEntity speedTextureEntity;
+       SpeedTextureEntity speedTextureEntity,velbaja;
 
             Texture enemigo_tex;
             Texture jefe_tex;
@@ -53,6 +54,7 @@
                     bala_text= new Texture("Bullet.png");
                     enemigo_tex = new Texture("Alien.png");
                     velocidad= new Texture("velocidad.png");
+                    caracol = new Texture("caracol.png");
            sonido = Gdx.audio.newMusic(Gdx.files.internal("pistola.mp3"));
            muerte= Gdx.audio.newMusic(Gdx.files.internal("muerte.mp3"));
            musicon = Gdx.audio.newMusic(Gdx.files.internal("musicadefondo.mp3"));
@@ -61,7 +63,8 @@
                     enemies.add( new Enemigo(new Vector2(300,600),enemigo_tex,PLAYER_VEL));
                     enemies.add( new Enemigo(new Vector2(200,400),enemigo_tex,PLAYER_VEL));
                  enemies.add( new Enemigo(new Vector2(500,600),enemigo_tex,PLAYER_VEL));
-         speedTextureEntity = new SpeedTextureEntity(new Vector2(500, 300), velocidad,500);
+         speedTextureEntity = new SpeedTextureEntity(new Vector2(500, 300), velocidad,300);
+         velbaja= new SpeedTextureEntity(new Vector2(600,200),caracol,100);
 
                  musicon.setLooping(true);
                  musicon.play();
@@ -74,6 +77,7 @@
                     gameLogic(deltaTime);
             ScreenUtils.clear(0, 0, 0, 1);
             main.dibujar.begin();
+
                     if(player != null){
                     player.draw(main.dibujar);
                     }
@@ -82,7 +86,7 @@
                         {
                             bala.draw(main.dibujar);
                         }
-
+           velbaja.draw(main.dibujar);
             if( !EnemyBullets.isEmpty()){
                 for(int i=0;i< EnemyBullets.size();i++)
                 {
@@ -119,6 +123,10 @@
                 if (player.isCollision(speedTextureEntity)) {
                     powerupvelocivad();
                 }
+                if(player.isCollision(velbaja))
+                {
+                    bajavelocidad();
+                }
                 if(player != null){
                     if(Gdx.input.isKeyPressed(Input.Keys.A))
                 {
@@ -139,7 +147,7 @@
                                     sonido.play();
                       }
                   }
-
+                    velbaja.update(deltaTime);
                     speedTextureEntity.update(deltaTime);
 
                     balaLogic(deltaTime);
@@ -260,12 +268,25 @@
         }
         public void powerupvelocivad() {
             player.aumenentovel(1500);
-            System.out.println("Velocidad aumentada");
 
             veloz = new Timer.Task() {
                 @Override
                 public void run() {
                    player.aumenentovel(PLAYER_VEL);
+
+                }
+            };
+            Timer.schedule(veloz, 2);
+        }
+
+        public void bajavelocidad()
+        {
+            player.aumenentovel(100);
+
+            veloz = new Timer.Task() {
+                @Override
+                public void run() {
+                    player.aumenentovel(PLAYER_VEL);
 
                 }
             };
