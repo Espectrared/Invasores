@@ -49,4 +49,7 @@ public class Player extends Entity{
               public Vector2 getPosition(){
                   return position;
               }
+    public void aumenentovel(float velocidad){
+        this.speed = velocidad;
+    }
 }
