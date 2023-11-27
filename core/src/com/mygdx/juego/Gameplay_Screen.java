@@ -12,6 +12,7 @@
     import com.badlogic.gdx.utils.Timer;
 
     public class Gameplay_Screen extends Screen_Base{
+
         Principal main;
         Player player;
         Texture jugador_tex;
@@ -30,7 +31,10 @@
             Texture enemigo_tex;
             Texture jefe_tex;
             ArrayList<Bala> bullets = new ArrayList<>();
+            ArrayList<BalaEnemigo> EnemyBullets = new ArrayList<>();
             long last_shot=0;
+            long last_shot2 = 0;
+
             static final int PLAYER_VEL=300;
             static final int FRE_DISPARO=500;
             BitmapFont font;
@@ -78,6 +82,14 @@
                         {
                             bala.draw(main.dibujar);
                         }
+
+            if( !EnemyBullets.isEmpty()){
+                for(int i=0;i< EnemyBullets.size();i++)
+                {
+                    EnemyBullets.get(i).draw(main.dibujar);
+                }
+            }
+
                     if( !enemies.isEmpty()){
                         for(int i=0;i< enemies.size();i++)
                         {
@@ -135,6 +147,7 @@
                 if(!enemies.isEmpty()){
                  enemyLogic(deltaTime);
                 }
+                    balaEnemigoLogic(deltaTime);
                   if(score >= 2000)
         {
             // Cambia a la pantalla de nivel 2
@@ -201,21 +214,50 @@
 
 
             }
+        public void balaEnemigoLogic(float daltaTime) {
+            if (EnemyBullets.isEmpty()) {
+                return;
+            }
+            for (int x = 0; x < EnemyBullets.size(); x++) {
+                EnemyBullets.get(x).update(daltaTime);
+                if (EnemyBullets.get(x).position.y > Gdx.graphics.getHeight()) {
+                    EnemyBullets.remove(x);
+                }
+            }
+            if (player != null) {
+                for (int j = 0; j < EnemyBullets.size(); j++) {
+                    if (EnemyBullets.get(j).isCollision(player)) {
+                        explosions.add(new Explosion(player.position.x, player.position.y));
+                        EnemyBullets.remove(j);
+                    }
+                }
+            }
+        }
          public void generateBoss(){
              int x = new Random().nextInt(400-10)+10;
                      int y = new Random().nextInt(400-10)+10;
               enemies.add( new Enemigo(new Vector2(x,y),enemigo_tex,PLAYER_VEL));
          }
-         public void enemyLogic(float deltaTime)
-            {
-                if(enemies.isEmpty()){
+        public void enemyLogic(float deltaTime) {
+            if (enemies.isEmpty()) {
                 return;
-                }
-                   for(int i=0;i< enemies.size();i++)
-                   {
-                       enemies.get(i).update(deltaTime);
-                   }
             }
+
+            for (int i = 0; i < enemies.size(); i++) {
+                Enemigo enemy = enemies.get(i);
+                if (enemy.detectarJugador(player)) {
+                    long time2 = System.currentTimeMillis();
+                    if ((time2 - last_shot2) >= FRE_DISPARO) {
+                        EnemyBullets.add(new BalaEnemigo(new Vector2(enemy.position.x, enemy.position.y+10), bala_text, 500));
+                        last_shot2 = System.currentTimeMillis();
+                    }
+                }
+                enemy.update(deltaTime);
+            }
+
+            // Resto de la lógica de colisiones con balas y eliminación de enemigos
+
+        }
         public void powerupvelocivad() {
             player.aumenentovel(1500);
             System.out.println("Velocidad aumentada");

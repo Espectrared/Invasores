@@ -33,4 +33,11 @@ public class Enemigo extends Entity{
         sprite.setPosition(position.x, position.y);
     }
 
+    public boolean detectarJugador(Player player) {
+        float rangoDeteccion = 10.0f;
+        float posicionRedondeada = Math.round(this.position.x);
+        return Math.abs(posicionRedondeada - player.position.x) < rangoDeteccion;
+    }
+
+
 }
