@@ -19,9 +19,10 @@ public class Principal extends Game {
 	FreeTypeFontGenerator generator;
         FreeTypeFontParameter parameter;
         BitmapFont font;
-        Client cliente;
-        Thread cliente_t;
+            Client cliente;
+            Thread cliente_t;
         String id;
+
         Gameplay_Screen gameplay;
 	@Override
 	public void create () {
@@ -32,10 +33,12 @@ public class Principal extends Game {
                 parameter = new FreeTypeFontParameter();
                 parameter.size=36;
                 font= generator.generateFont(parameter);
-                setScreen(new Screen_MM(this,font));
-                cliente = new Client(this);
-                cliente_t = new Thread(cliente);
-                cliente_t.start();
+                gameplay = new Gameplay_Screen(this,font);
+                setScreen(new Screen_MM(this,font,gameplay));
+                    cliente = new Client(this);
+                    cliente_t = new Thread(cliente);
+                    cliente_t.start();
+
                 	}
 	public void dispose () {
 		dibujar.dispose();

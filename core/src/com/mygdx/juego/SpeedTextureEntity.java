@@ -22,7 +22,6 @@ public class SpeedTextureEntity extends Entity {
     public void update(float deltaTime) {
         position.y -= deltaTime * speed;
 
-        // Keep the object within the screen bounds
         if (position.y < 0) {
             position.y = Gdx.graphics.getHeight();
         }

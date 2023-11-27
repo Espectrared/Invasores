@@ -19,13 +19,18 @@ Principal main;
 Texture fondo_text;
 long time,lastime=0;
 BitmapFont font;
-    Screen_MM(Principal main,BitmapFont font)
+    Client cliente;
+    Thread cliente_t;
+    Gameplay_Screen gameplay;
+    Screen_MM(Principal main,BitmapFont font,Gameplay_Screen gameplay)
     {
+        this.gameplay = gameplay;
         this.main=main;
         this.font=font;
         fondo_text= new Texture("fondo.jpg");
         
     }
+
     @Override
     public void render(float delta) {
 
@@ -36,7 +41,7 @@ BitmapFont font;
                 font.draw(main.dibujar, "Presiona espacio para continuar", 100, 400);
                 lastime=System.currentTimeMillis();
                 if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
-                    main.setScreen(new Gameplay_Screen(main,font));
+                    main.setScreen(gameplay);
                     
                 }
                	main.dibujar.end();

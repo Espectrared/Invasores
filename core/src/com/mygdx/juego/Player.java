@@ -53,4 +53,8 @@ public class Player extends Entity{
         this.speed = velocidad;
     }
 
+    public void setScale(float scaleX, float scaleY) {
+        this.sprite.setScale(scaleX, scaleY);
+    }
+
 }

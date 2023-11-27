@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Vector2;
  * @author rober
  */
 public class Jefe extends Enemigo{
+    int hp = 1000;
     
     public Jefe(Vector2 position, Texture img, float speed) {
         super(position, img, speed);
