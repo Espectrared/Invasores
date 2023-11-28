@@ -27,7 +27,7 @@ BitmapFont font;
         this.gameplay = gameplay;
         this.main=main;
         this.font=font;
-        fondo_text= new Texture("fondo.jpg");
+        fondo_text= new Texture("fondobueno.png");
         
     }
 
@@ -35,7 +35,7 @@ BitmapFont font;
     public void render(float delta) {
 
 		main.dibujar.begin();
-                main.dibujar.draw(fondo_text, 0, 0);
+                main.dibujar.draw(fondo_text, 0, 0,700,700);
                 time=System.currentTimeMillis();
                 if(time-lastime>1000)
                 font.draw(main.dibujar, "Presiona espacio para continuar", 100, 400);

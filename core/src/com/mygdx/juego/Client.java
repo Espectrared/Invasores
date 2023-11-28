@@ -45,24 +45,22 @@ public class Client implements Runnable {
                 mensaje = in.readUTF();
                 String[] mensajes = mensaje.split(";");
                 if(!(main.id.equals(mensajes[0]))){
-                    System.out.println("Desde cliente: "+mensaje);  
-                    if(mensajes[1].equalsIgnoreCase("jefe")){
-                   main.gameplay.generateBoss();
+                    System.out.println("Desde cliente: "+mensaje);
 
-                }
 
                     if(mensajes[1].equalsIgnoreCase("castigo")){
                         main.gameplay.generateCastigo();
                     }
-                    
+
                     if(mensajes[1].equalsIgnoreCase("gano")){
-                     main.setScreen(new Win_Screen(main, main.font, main.gameplay.score));
+                        main.setScreen(new Win_Screen(main, main.font, main.gameplay.score));
                     }
+                }
 
                 }
                                                             
 
-            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
